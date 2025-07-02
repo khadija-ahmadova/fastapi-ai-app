@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
+from ai.gemini import Gemini
 
 # --- app initialization
 app = FastAPI()
@@ -14,6 +15,13 @@ def load_system_prompt():
             return None
     
 system_prompt = load_system_prompt()
+
+gemini_api_key = os.getenv("GEMINI_API_KEY")
+if not gemini_api_key:
+    raise ValueError("GEMINI_API_KEY env variable not set.")
+
+ai_platform = Gemini(api_key=gemini_api_key, system_prompt=system_prompt)
+
 
 # --- pydantic models ---
 class ChatRequest(BaseModel):
@@ -30,6 +38,5 @@ async def root():
 
 @app.post("chat/", response_model=ChatResponse)
 async def chat(request: ChatRequest):
-    # TODO: implement ai intergration
-    response_text = "..."
+    response_text = ai_platform.chat(request.prompt)
     return ChatResponse(response=response_text)
