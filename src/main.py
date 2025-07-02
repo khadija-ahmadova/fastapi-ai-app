@@ -2,8 +2,18 @@ import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-# initialize app
+# --- app initialization
 app = FastAPI()
+
+# --- ai configuration ---
+def load_system_prompt():
+    try:
+        with open("src/prompts/system_prompt.md", "r") as f:
+            return f.read()
+    except FileNotFoundError:
+            return None
+    
+system_prompt = load_system_prompt()
 
 # --- pydantic models ---
 class ChatRequest(BaseModel):
