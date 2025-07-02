@@ -1,7 +1,7 @@
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
-from ai.gemini import Gemini
+from .ai.gemini import Gemini
 
 # --- app initialization
 app = FastAPI()
@@ -36,7 +36,7 @@ class ChatResponse(BaseModel):
 async def root():
     return {"message": "API is running"}
 
-@app.post("chat/", response_model=ChatResponse)
+@app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     response_text = ai_platform.chat(request.prompt)
     return ChatResponse(response=response_text)
