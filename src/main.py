@@ -11,3 +11,15 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     response: str # return {"response": "..."}
+
+
+# --- api endpoints ---
+@app.get("/")
+async def root():
+    return {"message": "API is running"}
+
+@app.post("chat/", response_model=ChatResponse)
+async def chat(request: ChatRequest):
+    # TODO: implement ai intergration
+    response_text = "..."
+    return ChatResponse(response=response_text)
