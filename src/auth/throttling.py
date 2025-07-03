@@ -39,7 +39,7 @@ def apply_rate_limit(user_id: str):
         )
     else:
         current_usage = len(user_requests[user_id])
-        print(f"user {user.id}: {current_usage + 1}/{rate_limit} requests used")
+        print(f"user {user_id}: {current_usage + 1}/{rate_limit} requests used")
 
     user_requests[user_id].append(current_time)
     return True
