@@ -2,3 +2,4 @@ fastapi # api framework
 uvicorn # web server runtime
 pydantic # for data validation
 google-generativeai
+python-jose[cryptography]
